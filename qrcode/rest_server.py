@@ -4,6 +4,7 @@ import random
 from json import JSONEncoder, JSONDecoder
 
 import boto3
+import requests
 from eve import Eve
 from flask import request
 from qrcode.utils import read_yaml_config
@@ -57,7 +58,17 @@ def gates_status_request_hdl():
         if len(qrcode_l) != 2:
             return "Illegal qrcode format ", 400
 
-
+        redis_value = _REDIS.get(qrcode_l[0])
+        if redis_value is None:
+            print("no token")
+            requests.post('http://172.31.23.79/access:10004', data={"is_permitted": False})
+        else:
+            if redis_value.decode("utf-8") != qrcode_l[1]:
+                print("not match")
+                requests.post('http://172.31.23.79/access:10004', data={"is_permitted": False})
+            else:
+                print("match")
+                requests.post('http://172.31.23.79/access:10004', data={"is_permitted": True})
 
         return "", 200
 
