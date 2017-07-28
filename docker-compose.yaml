@@ -1,5 +1,5 @@
 qrcode:
-  image: registry.docker.com:80/centos/retail_qrcode
+  image: docker.retail.com/retail/retail_qrcode
   command: python3 app.py
   ports:
          - "5000:5000"

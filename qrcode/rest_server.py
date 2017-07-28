@@ -47,12 +47,18 @@ def gates_status_request_hdl():
         if body is None:
             return "lost body", 400
 
+        print("r json str ", body)
+
         payload = JSONDecoder().decode(body)
+
+        print("json 2 dict ", payload)
 
         dev_attri = payload.get("dev", None)
         qrcode_attri = payload.get("qrcode", None)
         if dev_attri is None or qrcode_attri is None:
             return "lost dev or qrcode", 400
+
+        print(dev_attri, qrcode_attri)
 
         qrcode_l = qrcode_attri.split("$", 1)
         if len(qrcode_l) != 2:
