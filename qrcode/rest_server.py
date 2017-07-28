@@ -67,14 +67,14 @@ def gates_status_request_hdl():
         redis_value = _REDIS.get(qrcode_l[0])
         if redis_value is None:
             print("no token")
-            requests.post('http://172.31.23.79/access:10004', data={"is_permitted": False})
+            requests.post('http://54.255.220.116/access:10004', data={"is_permitted": False})
         else:
             if redis_value.decode("utf-8") != qrcode_l[1]:
                 print("not match")
-                requests.post('http://172.31.23.79/access:10004', data={"is_permitted": False})
+                requests.post('http://54.255.220.116/access:10004', data={"is_permitted": False})
             else:
                 print("match")
-                requests.post('http://172.31.23.79/access:10004', data={"is_permitted": True})
+                requests.post('http://54.255.220.116/access:10004', data={"is_permitted": True})
 
         return "", 200
 
